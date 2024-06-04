@@ -124,18 +124,18 @@ Sigma_delta = diag(sig1)*R_crs_mat*diag(sig2);
 Phi_st = Sigma_delta*inv(Sigma);
 %Phi_st= diag(sig2)*R_crs_mat*inv(R_auto_mat)*inv(diag(sig2));
 % Q_st = diag([repmat(zeros(nR,1),state_ep-1,1);(mean(Q,2).^2)*(coeff)^2]);
-if choice_Q == 1
+%if choice_Q == 1
     Q_st = Sigma -  Sigma_delta * inv(Sigma) *Sigma_delta';
-else if choice_Q == 2
-        Q_st = diag(repmat(mean(Q,2),state_ep,1).^2)*(coeff)^2;
-    else if choice_Q == 3
-            Q_st = diag([repmat(zeros(nR,1),state_ep-1,1);(mean(Q,2).^2)*(coeff)^2]);
-        else
-            Q_st = diag([repmat(zeros(nR,1),state_ep,1)]);
-        end
-    end
-end
-Q_st_plot=Q_st;
+% else if choice_Q == 2
+%         Q_st = diag(repmat(mean(Q,2),state_ep,1).^2)*(coeff)^2;
+%     else if choice_Q == 3
+%             Q_st = diag([repmat(zeros(nR,1),state_ep-1,1);(mean(Q,2).^2)*(coeff)^2]);
+%         else
+%             Q_st = diag([repmat(zeros(nR,1),state_ep,1)]);
+%         end
+%     end
+% end
+%Q_st_plot=Q_st;
 % Q_st_plot(Q_st_plot<1e-5&Q_st_plot>-1e-5)=0.00001;
 
 % figure

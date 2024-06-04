@@ -1,5 +1,5 @@
 function [c,D,tau] = build_cDtau(Q,A,W,S,QWBM,grch1,W_z,S_z,nR,Q_withunc)
-%QWBM = median(Q,'all');
+QWBM = median(Q,'all');
 %% hydraulic diffusivity: hydraulic diffusivity D0 was calculated as
 %% the median of the values computed for in all days using equation:
 %% D = Q/(2WS)
@@ -20,13 +20,13 @@ for i = 1:nR
             %  D(i,1) = abs(median(Q(ns,idx))./(2*median(W(ns,idx)).*median(abs(S(ns,idx)))));
         %        D(i,1) = abs(QWBM./(2*mean(W(ns,idx)).*mean((S(ns,idx)))));
         %        D(i,1) = abs(QWBM./(2*(W_z(i)).*abs(S_z(i))));
-        D(i,1) = abs(mean(QWBM./(2*W(ns,idx).*(S(ns,idx)))));
-      %  D(i,1) = abs(QWBM./(2*mean(W(ns,idx)).*mean(abs(S(ns,idx)))));
+        D(i,1) = abs(median(QWBM./(2*W(ns,idx).*(S(ns,idx)))));
+      %  D(i,1) = abs(QWBM./(2*median(W(ns,idx)).*median(abs(S(ns,idx)))));
        %   D(i,1) = abs(median(QWBM./(2*W(ns,idx).*(S(ns,idx)))));
     else
         idx = find(S_z(i,:)~=0);
-       % D(i,1) = abs(QWBM./(2*mean(W_z(i,idx)).*mean(abs(S_z(i,idx)))));
-        D(i,1) = abs(mean(QWBM./(2*W_z(i,idx).*(S_z(i,idx)))));
+       % D(i,1) = abs(QWBM./(2*median(W_z(i,idx)).*median(abs(S_z(i,idx)))));
+        D(i,1) = abs(median(QWBM./(2*W_z(i,idx).*(S_z(i,idx)))));
     end
     % D(i,1) = abs(QWBM./(2*median((W(i,idx))).*median(abs(S(i,idx)))));
     % D(i,1) = abs(QWBM./(2*mean(W(i,idx)).*mean((S(i,idx)))));
@@ -62,6 +62,7 @@ c_rrmse = [];
 tau = [];
 for i = 1:size(A,1)
      y =Q(i,:)';
+    %  y =Q_withunc(i,:)';
     x = A(i,:)';
     
     %% diffussive wave celerity
@@ -97,6 +98,7 @@ for i = 1:size(A,1)
     %% the empirical autocorrelation function estimated using SWOT
     %% discharge estimates for each reach.
      y =Q(i,:)';
+    % y =Q_withunc(i,:)';
     [cval,lags] = xcorr(y,'normalized');
     corr_y = cval(length(x)-1:-1:1);
     dt = [1:length(x)-1]';

@@ -69,8 +69,8 @@ m=[180 180 180];
 figure('position',[1000,1000,800,4000])
 set(gca,'FontSize',18)
 title_gauged = [{'reach 1','reach 2','reach 3'}];
-for i = 1:nR
-    subplot(nR,1,i)
+for i = 1:3
+    subplot(3,1,i)
      set(gca,'FontSize',15)
     idx  = reach{i};
     plot(2:nt,Q_true(i,2:end),'k-','Linewidth',3);
@@ -87,7 +87,7 @@ for i = 1:nR
         hold on
     end
     xlim([2,nt])
-    ylim([0,1000])
+   % ylim([0,1000])
     %ylim([min(Q_true(i,:))-1000,max(Q_true(i,:))+1000])
     set(gca,'FontSize',20)
 %    title(title_gauged(i))
